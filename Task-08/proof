@@ -1,0 +1,13 @@
+# insmod debug_fs.ko 
+# dmesg 
+[ 2658.500700] Initilizing Debugfs Entry
+# cat /sys/kernel/debug/eudyptula/id
+823daa4ac90a
+# echo 823daa4ac90a > /sys/kernel/debug/eudyptula/id
+# echo 823daa4 > /sys/kernel/debug/eudyptula/id
+-sh: write error: Invalid argument
+# rmmod debug_fs.ko 
+# dmesg 
+[ 2658.500700] Initilizing Debugfs Entry
+[ 2723.138914] Module Exiting
+#

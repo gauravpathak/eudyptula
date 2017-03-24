@@ -1,0 +1,26 @@
+From 3dbe2e72f89a58d6cb71f1c1ec25872ac77b8d92 Mon Sep 17 00:00:00 2001
+From: Gaurav Pathak <gauravpathak129@gmail.com>
+Date: Fri, 20 Jan 2017 20:59:24 +0530
+Subject: [PATCH] Edited EXTRAVERSION to have string "-eudyptula"
+
+Signed-off-by: Gaurav Pathak <gauravpathak129@gmail.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 96e2352..0f6098b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,7 +1,7 @@
+ VERSION = 4
+ PATCHLEVEL = 10
+ SUBLEVEL = 0
+-EXTRAVERSION = -rc4
++EXTRAVERSION = -eudyptula
+ NAME = Roaring Lionus
+ 
+ # *DOCUMENTATION*
+-- 
+2.7.4
+

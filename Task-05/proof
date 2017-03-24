@@ -1,0 +1,13 @@
+Feb  4 14:29:18 gaurav-pc kernel: [ 6725.377207] usb 1-1: USB disconnect, device number 19
+Feb  4 14:29:18 gaurav-pc systemd-udevd[5110]: specified group 'phablet' unknown
+Feb  4 14:29:28 gaurav-pc kernel: [ 6735.465980] usb 1-2: new low-speed USB device number 20 using xhci_hcd
+Feb  4 14:29:28 gaurav-pc kernel: [ 6735.610636] usb 1-2: New USB device found, idVendor=046d, idProduct=c069
+Feb  4 14:29:28 gaurav-pc kernel: [ 6735.610640] usb 1-2: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+Feb  4 14:29:28 gaurav-pc kernel: [ 6735.610642] usb 1-2: Product: USB Laser Mouse
+Feb  4 14:29:28 gaurav-pc kernel: [ 6735.610644] usb 1-2: Manufacturer: Logitech
+Feb  4 14:29:28 gaurav-pc kernel: [ 6735.616319] input: Logitech USB Laser Mouse as /devices/pci0000:00/0000:00:14.0/usb1/1-2/1-2:1.0/0003:046D:C069.0009/input/input29
+Feb  4 14:29:28 gaurav-pc kernel: [ 6735.616613] hid-generic 0003:046D:C069.0009: input,hidraw0: USB HID v1.10 Mouse [Logitech USB Laser Mouse] on usb-0000:00:14.0-2/input0
+Feb  4 14:29:28 gaurav-pc mtp-probe: checking bus 1, device 20: "/sys/devices/pci0000:00/0000:00:14.0/usb1/1-2"
+Feb  4 14:29:28 gaurav-pc mtp-probe: bus: 1, device: 20 was not an MTP device
+Feb  4 14:29:28 gaurav-pc kernel: [ 6735.628975] Hello World!
+Feb  4 14:29:35 gaurav-pc kernel: [ 6742.775931] usb 1-2: USB disconnect, device number 20

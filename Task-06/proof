@@ -1,0 +1,28 @@
+
+# insmod hello.ko 
+# cat /var/log/messages 
+Jan  1 01:44:44 buildroot kern.info kernel: [ 3275.260873] I'm in
+# cat /dev/eudyptula 
+823daa4ac90a# 
+# cat /var/log/messages 
+Jan  1 01:44:44 buildroot kern.info kernel: [ 3275.260873] I'm in
+Jan  1 01:45:02 buildroot kern.info kernel: [ 3293.030489] 13 Bytes read
+# echo '823daa4ac90a' > /dev/eudyptula 
+# cat /var/log/messages 
+Jan  1 01:44:44 buildroot kern.info kernel: [ 3275.260873] I'm in
+Jan  1 01:45:02 buildroot kern.info kernel: [ 3293.030489] 13 Bytes read
+Jan  1 01:45:11 buildroot kern.info kernel: [ 3293.030646] 0 Bytes read<6>[ 3302.666613] 13 Bytes Written: 823daa4ac90a
+# echo '823daa4ac90a' > /dev/eudyptula 
+# cat /var/log/messages 
+Jan  1 01:44:44 buildroot kern.info kernel: [ 3275.260873] I'm in
+Jan  1 01:45:02 buildroot kern.info kernel: [ 3293.030489] 13 Bytes read
+Jan  1 01:45:11 buildroot kern.info kernel: [ 3293.030646] 0 Bytes read<6>[ 3302.666613] 13 Bytes Written: 823daa4ac90a
+Jan  1 01:45:21 buildroot kern.info kernel: [ 3312.412846] 13 Bytes Written: 823daa4ac90a
+# rmmod hello
+# cat /var/log/messages 
+Jan  1 01:44:44 buildroot kern.info kernel: [ 3275.260873] I'm in
+Jan  1 01:45:02 buildroot kern.info kernel: [ 3293.030489] 13 Bytes read
+Jan  1 01:45:11 buildroot kern.info kernel: [ 3293.030646] 0 Bytes read<6>[ 3302.666613] 13 Bytes Written: 823daa4ac90a
+Jan  1 01:45:21 buildroot kern.info kernel: [ 3312.412846] 13 Bytes Written: 823daa4ac90a
+Jan  1 01:45:34 buildroot kern.info kernel: [ 3324.828328] I'm out
+# 
