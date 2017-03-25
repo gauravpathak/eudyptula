@@ -1,3 +1,9 @@
 #Eclipse Project settings
 .cproject
 .project
+
+#LKM compiled files
+.ko
+.o
+.cmd
+.order
