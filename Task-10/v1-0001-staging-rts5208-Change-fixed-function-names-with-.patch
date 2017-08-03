@@ -1,0 +1,241 @@
+From 2be001d0a7772f36a3b728d8d37e1a078b85d133 Mon Sep 17 00:00:00 2001
+From: Gaurav Pathak <gauravpathak129@gmail.com>
+Date: Thu, 20 Jul 2017 21:01:08 +0530
+Subject: [PATCH v1] staging: rts5208: Change fixed function names with "%s: ",
+ __func__
+
+staging: rts5208: Fix coding style issue caught by checkpatch.pl related to
+function name in debug print
+
+Signed-off-by: Gaurav Pathak <gauravpathak129@gmail.com>
+---
+ drivers/staging/rts5208/ms.c        |  5 +++--
+ drivers/staging/rts5208/rtsx.c      |  4 ++--
+ drivers/staging/rts5208/rtsx_chip.c |  4 ++--
+ drivers/staging/rts5208/sd.c        | 21 +++++++++++----------
+ drivers/staging/rts5208/spi.c       |  8 +++++---
+ drivers/staging/rts5208/xd.c        | 17 ++++++++++-------
+ 6 files changed, 33 insertions(+), 26 deletions(-)
+
+diff --git a/drivers/staging/rts5208/ms.c b/drivers/staging/rts5208/ms.c
+index 482a29d..7cdce87 100644
+--- a/drivers/staging/rts5208/ms.c
++++ b/drivers/staging/rts5208/ms.c
+@@ -3064,7 +3064,8 @@ static int mspro_rw_multi_sector(struct scsi_cmnd *srb,
+ 
+ 		if (detect_card_cd(chip, MS_CARD) != STATUS_SUCCESS) {
+ 			chip->rw_need_retry = 0;
+-			dev_dbg(rtsx_dev(chip), "No card exist, exit mspro_rw_multi_sector\n");
++			dev_dbg(rtsx_dev(chip), "No card exist, exit %s\n",
++				__func__);
+ 			rtsx_trace(chip);
+ 			return STATUS_FAIL;
+ 		}
+@@ -3101,7 +3102,7 @@ static int mspro_read_format_progress(struct rtsx_chip *chip,
+ 	u8 cnt, tmp;
+ 	u8 data[8];
+ 
+-	dev_dbg(rtsx_dev(chip), "mspro_read_format_progress, short_data_len = %d\n",
++	dev_dbg(rtsx_dev(chip), "%s, short_data_len = %d\n", __func__,
+ 		short_data_len);
+ 
+ 	retval = ms_switch_clock(chip);
+diff --git a/drivers/staging/rts5208/rtsx.c b/drivers/staging/rts5208/rtsx.c
+index b8177f5..53748d6 100644
+--- a/drivers/staging/rts5208/rtsx.c
++++ b/drivers/staging/rts5208/rtsx.c
+@@ -999,7 +999,7 @@ static int rtsx_probe(struct pci_dev *pci,
+ 
+ 	/* We come here if there are any problems */
+ errout:
+-	dev_err(&pci->dev, "rtsx_probe() failed\n");
++	dev_err(&pci->dev, "%s failed\n", __func__);
+ 	release_everything(dev);
+ 
+ 	return err;
+@@ -1009,7 +1009,7 @@ static void rtsx_remove(struct pci_dev *pci)
+ {
+ 	struct rtsx_dev *dev = pci_get_drvdata(pci);
+ 
+-	dev_info(&pci->dev, "rtsx_remove() called\n");
++	dev_info(&pci->dev, "%s called\n", __func__);
+ 
+ 	quiesce_and_remove_host(dev);
+ 	release_everything(dev);
+diff --git a/drivers/staging/rts5208/rtsx_chip.c b/drivers/staging/rts5208/rtsx_chip.c
+index 7f4107b..4ad472d 100644
+--- a/drivers/staging/rts5208/rtsx_chip.c
++++ b/drivers/staging/rts5208/rtsx_chip.c
+@@ -616,8 +616,8 @@ int rtsx_reset_chip(struct rtsx_chip *chip)
+ 		else
+ 			retval = rtsx_pre_handle_sdio_new(chip);
+ 
+-		dev_dbg(rtsx_dev(chip), "chip->need_reset = 0x%x (rtsx_reset_chip)\n",
+-			(unsigned int)(chip->need_reset));
++		dev_dbg(rtsx_dev(chip), "chip->need_reset = 0x%x (%s)\n",
++			(unsigned int)(chip->need_reset), __func__);
+ #else  /* HW_AUTO_SWITCH_SD_BUS */
+ 		retval = rtsx_pre_handle_sdio_old(chip);
+ #endif  /* HW_AUTO_SWITCH_SD_BUS */
+diff --git a/drivers/staging/rts5208/sd.c b/drivers/staging/rts5208/sd.c
+index c2eb072..b1fd0a1 100644
+--- a/drivers/staging/rts5208/sd.c
++++ b/drivers/staging/rts5208/sd.c
+@@ -910,8 +910,8 @@ static int sd_change_phase(struct rtsx_chip *chip, u8 sample_point, u8 tune_dir)
+ 	int retval;
+ 	bool ddr_rx = false;
+ 
+-	dev_dbg(rtsx_dev(chip), "sd_change_phase (sample_point = %d, tune_dir = %d)\n",
+-		sample_point, tune_dir);
++	dev_dbg(rtsx_dev(chip), "%s (sample_point = %d, tune_dir = %d)\n",
++		__func__, sample_point, tune_dir);
+ 
+ 	if (tune_dir == TUNE_RX) {
+ 		SD_VP_CTL = SD_VPRX_CTL;
+@@ -1225,8 +1225,8 @@ static int sd_check_switch_mode(struct rtsx_chip *chip, u8 mode, u8 func_group,
+ 	int retval;
+ 	u8 cmd[5], buf[64];
+ 
+-	dev_dbg(rtsx_dev(chip), "sd_check_switch_mode (mode = %d, func_group = %d, func_to_switch = %d)\n",
+-		mode, func_group, func_to_switch);
++	dev_dbg(rtsx_dev(chip), "%s (mode = %d, func_group = %d, func_to_switch = %d)\n",
++		__func__, mode, func_group, func_to_switch);
+ 
+ 	cmd[0] = 0x40 | SWITCH;
+ 	cmd[1] = mode;
+@@ -3575,8 +3575,8 @@ static int reset_mmc_only(struct rtsx_chip *chip)
+ 		return STATUS_FAIL;
+ 	}
+ 
+-	dev_dbg(rtsx_dev(chip), "In reset_mmc_only, sd_card->sd_type = 0x%x\n",
+-		sd_card->sd_type);
++	dev_dbg(rtsx_dev(chip), "In %s, sd_card->sd_type = 0x%x\n",
++		__func__, sd_card->sd_type);
+ 
+ 	return STATUS_SUCCESS;
+ }
+@@ -3699,11 +3699,11 @@ int sd_rw(struct scsi_cmnd *srb, struct rtsx_chip *chip, u32 start_sector,
+ 	int retval;
+ 
+ 	if (srb->sc_data_direction == DMA_FROM_DEVICE) {
+-		dev_dbg(rtsx_dev(chip), "sd_rw: Read %d %s from 0x%x\n",
++		dev_dbg(rtsx_dev(chip), "%s: Read %d %s from 0x%x\n", __func__,
+ 			sector_cnt, (sector_cnt > 1) ? "sectors" : "sector",
+ 			start_sector);
+ 	} else {
+-		dev_dbg(rtsx_dev(chip), "sd_rw: Write %d %s to 0x%x\n",
++		dev_dbg(rtsx_dev(chip), "%s: Write %d %s to 0x%x\n", __func__,
+ 			sector_cnt, (sector_cnt > 1) ? "sectors" : "sector",
+ 			start_sector);
+ 	}
+@@ -3921,7 +3921,8 @@ int sd_rw(struct scsi_cmnd *srb, struct rtsx_chip *chip, u32 start_sector,
+ 		rtsx_clear_sd_error(chip);
+ 		if (detect_card_cd(chip, SD_CARD) != STATUS_SUCCESS) {
+ 			chip->rw_need_retry = 0;
+-			dev_dbg(rtsx_dev(chip), "No card exist, exit sd_rw\n");
++			dev_dbg(rtsx_dev(chip), "No card exist, exit %s\n",
++				__func__);
+ 			rtsx_trace(chip);
+ 			return STATUS_FAIL;
+ 		}
+@@ -3964,7 +3965,7 @@ int sd_rw(struct scsi_cmnd *srb, struct rtsx_chip *chip, u32 start_sector,
+ 
+ 	if (detect_card_cd(chip, SD_CARD) != STATUS_SUCCESS) {
+ 		chip->rw_need_retry = 0;
+-		dev_dbg(rtsx_dev(chip), "No card exist, exit sd_rw\n");
++		dev_dbg(rtsx_dev(chip), "No card exist, exit %s\n", __func__);
+ 		rtsx_trace(chip);
+ 		return STATUS_FAIL;
+ 	}
+diff --git a/drivers/staging/rts5208/spi.c b/drivers/staging/rts5208/spi.c
+index 8b8cd95..b5646b6 100644
+--- a/drivers/staging/rts5208/spi.c
++++ b/drivers/staging/rts5208/spi.c
+@@ -520,7 +520,7 @@ int spi_get_status(struct scsi_cmnd *srb, struct rtsx_chip *chip)
+ {
+ 	struct spi_info *spi = &chip->spi;
+ 
+-	dev_dbg(rtsx_dev(chip), "spi_get_status: err_code = 0x%x\n",
++	dev_dbg(rtsx_dev(chip), "%s: err_code = 0x%x\n", __func__,
+ 		spi->err_code);
+ 	rtsx_stor_set_xfer_buf(&spi->err_code,
+ 			       min_t(int, scsi_bufflen(srb), 1), srb);
+@@ -543,8 +543,10 @@ int spi_set_parameter(struct scsi_cmnd *srb, struct rtsx_chip *chip)
+ 	spi->clk_div = ((u16)(srb->cmnd[4]) << 8) | srb->cmnd[5];
+ 	spi->write_en = srb->cmnd[6];
+ 
+-	dev_dbg(rtsx_dev(chip), "spi_set_parameter: spi_clock = %d, clk_div = %d, write_en = %d\n",
+-		spi->spi_clock, spi->clk_div, spi->write_en);
++	dev_dbg(rtsx_dev(chip), "%s: ", __func__);
++	dev_dbg(rtsx_dev(chip), "spi_clock = %d, ", spi->spi_clock);
++	dev_dbg(rtsx_dev(chip), "clk_div = %d, ", spi->clk_div);
++	dev_dbg(rtsx_dev(chip), "write_en = %d\n", spi->write_en);
+ 
+ 	return STATUS_SUCCESS;
+ }
+diff --git a/drivers/staging/rts5208/xd.c b/drivers/staging/rts5208/xd.c
+index 74d36f9..11ea0c6 100644
+--- a/drivers/staging/rts5208/xd.c
++++ b/drivers/staging/rts5208/xd.c
+@@ -885,7 +885,7 @@ static int xd_init_l2p_tbl(struct rtsx_chip *chip)
+ 	struct xd_info *xd_card = &chip->xd_card;
+ 	int size, i;
+ 
+-	dev_dbg(rtsx_dev(chip), "xd_init_l2p_tbl: zone_cnt = %d\n",
++	dev_dbg(rtsx_dev(chip), "%s: zone_cnt = %d\n", __func__,
+ 		xd_card->zone_cnt);
+ 
+ 	if (xd_card->zone_cnt < 1) {
+@@ -1026,7 +1026,8 @@ static u32 xd_get_l2p_tbl(struct rtsx_chip *chip, int zone_no, u16 log_off)
+ #ifdef XD_DELAY_WRITE
+ 		retval = xd_delay_write(chip);
+ 		if (retval != STATUS_SUCCESS) {
+-			dev_dbg(rtsx_dev(chip), "In xd_get_l2p_tbl, delay write fail!\n");
++			dev_dbg(rtsx_dev(chip), "In %s, delay write fail!\n",
++				__func__);
+ 			return BLK_NOT_FOUND;
+ 		}
+ #endif
+@@ -1434,7 +1435,7 @@ static int xd_build_l2p_tbl(struct rtsx_chip *chip, int zone_no)
+ 	u16 cur_lst_page_logoff, ent_lst_page_logoff;
+ 	u8 redunt[11];
+ 
+-	dev_dbg(rtsx_dev(chip), "xd_build_l2p_tbl: %d\n", zone_no);
++	dev_dbg(rtsx_dev(chip), "%s: %d\n", __func__, zone_no);
+ 
+ 	if (!xd_card->zone) {
+ 		retval = xd_init_l2p_tbl(chip);
+@@ -1774,8 +1775,10 @@ static int xd_finish_write(struct rtsx_chip *chip,
+ 	int retval, zone_no;
+ 	u16 log_off;
+ 
+-	dev_dbg(rtsx_dev(chip), "xd_finish_write, old_blk = 0x%x, new_blk = 0x%x, log_blk = 0x%x\n",
+-		old_blk, new_blk, log_blk);
++	dev_dbg(rtsx_dev(chip), "%s ", __func__);
++	dev_dbg(rtsx_dev(chip), "old_blk = 0x%x, ", old_blk);
++	dev_dbg(rtsx_dev(chip),	"new_blk = 0x%x, ", new_blk);
++	dev_dbg(rtsx_dev(chip), "log_blk = 0x%x\n", log_blk);
+ 
+ 	if (page_off > xd_card->page_off) {
+ 		rtsx_trace(chip);
+@@ -1960,7 +1963,7 @@ int xd_delay_write(struct rtsx_chip *chip)
+ 	int retval;
+ 
+ 	if (delay_write->delay_write_flag) {
+-		dev_dbg(rtsx_dev(chip), "xd_delay_write\n");
++		dev_dbg(rtsx_dev(chip), "%s\n", __func__);
+ 		retval = xd_switch_clock(chip);
+ 		if (retval != STATUS_SUCCESS) {
+ 			rtsx_trace(chip);
+@@ -2002,7 +2005,7 @@ int xd_rw(struct scsi_cmnd *srb, struct rtsx_chip *chip,
+ 
+ 	xd_card->cleanup_counter = 0;
+ 
+-	dev_dbg(rtsx_dev(chip), "xd_rw: scsi_sg_count = %d\n",
++	dev_dbg(rtsx_dev(chip), "%s: scsi_sg_count = %d\n", __func__,
+ 		scsi_sg_count(srb));
+ 
+ 	ptr = (u8 *)scsi_sglist(srb);
+-- 
+2.7.4
+

@@ -1,0 +1,3 @@
+Web link of the patch: https://lkml.org/lkml/2017/7/20/708
+
+Pointer to my patch in subsystem tree: https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/staging.git/commit/?h=staging-next&id=2d7725913528ff5c7054d11d6bc44145e227ef45
