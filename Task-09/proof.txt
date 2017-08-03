@@ -1,0 +1,48 @@
+ls
+debug_fs.ko  hello.ko     sysfs.ko
+# insmod sysfs.ko
+# # dme# dmesg
+# [ 5705.685672] Creting Kobject
+# [ 5705.685776] Creting Sysfs Groups
+# # ls /sys/kernel/eudyptula/
+# foo      id       jiffies
+# # cat /sys/kernel/eudyptula/jiffies
+# 543117
+# # cat /sys/kernel/eudyptula/id
+# 823daa4ac90a
+# # echo "1234" > /sys/kernel/eudyptula/id
+# -sh: write error: Invalid argument
+# echo "823daa4ac90a" > /sys/kernel/eudyptula/id
+# # echo "Example" > /sys/kernel/eudyptula/jiffies
+# -sh: can't create /sys/kernel/eudyptula/jiffies: Permission denied
+# # echo "PAGESIZE Writeable" > /sys/kernel/eudyptula/foo
+# # cat /sys/kernel/eudyptula/foo
+# PAGESIZE Writeable
+# # echo "Gaurav" > /sys/kernel/eudyptula/foo
+# # cat /sys/kernel/eudyptula/foo
+# Gaurav
+#
+# # dme# dmesg
+# [ 5705.685672] Creting Kobject
+# [ 5705.685776] Creting Sysfs Groups
+# [ 5752.694331] ID: 1234
+# [ 5752.694331]
+# [ 5764.975595] ID: 823daa4ac90a
+# [ 5764.975595]
+# # rmm# rmmod sys# rmmod sysfs.ko
+# # dme# dmesg
+# [ 5705.685672] Creting Kobject
+# [ 5705.685776] Creting Sysfs Groups
+# [ 5752.694331] ID: 1234
+# [ 5752.694331]
+# [ 5764.975595] ID: 823daa4ac90a
+# [ 5764.975595]
+# [ 5824.195367] Cleaning and Exiting
+# # ls /sys/kernel/
+# boot_params         kexec_loaded        uevent_helper
+# debug               mm                  uevent_seqnum
+# fscaps              notes               vmcoreinfo
+# kexec_crash_loaded  rcu_expedited
+# kexec_crash_size    slab
+# #
+
