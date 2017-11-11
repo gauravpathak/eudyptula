@@ -259,6 +259,49 @@ static const struct iio_info adc1x8s102_info = {
 	.driver_module		= THIS_MODULE,
 };
 
+const char MY_ID[] = "823daa4ac90a";
+static char id[12];
+
+static ssize_t event_store(struct device *dev,
+	struct device_attribute *attr, const char *valbuf, size_t count)
+{
+
+	ssize_t ret = 0;
+
+	if (strcmp(attr->attr.name, "id") == 0) {
+		if (strncmp(valbuf, MY_ID, strlen(MY_ID)) != 0)
+			ret = -EINVAL;
+		else {
+			strncpy(id, valbuf, strlen(MY_ID));
+			ret = count;
+		}
+	}
+
+	return ret;
+}
+
+static ssize_t event_show(struct device *dev,
+	struct device_attribute *attr, char *valbuf)
+{
+
+	int ret = 0;
+
+	if (strcmp(attr->attr.name, "id") == 0)
+		ret = sprintf(valbuf, "%s\n", MY_ID);
+
+	return ret;
+}
+
+DEVICE_ATTR_RW(event);
+
+static int create_sysfs_attrs(struct iio_dev *dev)
+{
+	int retval = 0;
+
+	retval = device_create_file(&dev->dev, &dev_attr_event);
+
+	return retval;
+}
 
 static int adc1x8s102_probe(struct spi_device *spi)
 {
@@ -324,6 +367,10 @@ static int adc1x8s102_probe(struct spi_device *spi)
 			"Failed to register IIO device\n");
 		goto error_cleanup_ring;
 	}
+
+	if (create_sysfs_attrs(indio_dev) < 0)
+		dev_err(&spi->dev, "Failed to create User Entry\n");
+
 	return 0;
 
 error_cleanup_ring:
