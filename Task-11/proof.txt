@@ -1,0 +1,27 @@
+ls
+adc1x8s102.ko
+# insmod adc1x8s102.ko 
+[ 1159.150835] Creating Sysfs Attribute
+# ls /sys/devices/pci0000:00/0000:00:15.0/pxa2xx-spi.0/spi_master/spi0/spi0.0/ii
+o:device0/id
+/sys/devices/pci0000:00/0000:00:15.0/pxa2xx-spi.0/spi_master/spi0/spi0.0/iio:device0/id
+# cat /sys/devices/pci0000:00/0000:00:15.0/pxa2xx-spi.0/spi_master/spi0/spi0.0/iio:device0/id
+823daa4ac90a
+# 
+# 
+# 
+# echo "823daa4ac90a" >/sys/devices/pci0000:00/0000:00:15.0/pxa2xx-spi.0/spi_master/spi0/spi0.0/iio:device0/id
+[ 1220.214115] ID: 823daa4ac90a
+[ 1220.214115] 
+# dmesg 
+[ 1159.150835] Creating Sysfs Attribute
+[ 1220.214115] ID: 823daa4ac90a
+[ 1220.214115] 
+# rmmod adc1x8s102.ko 
+#dmesg 
+[ 1159.150835] Creating Sysfs Attribute
+[ 1220.214115] ID: 823daa4ac90a
+[ 1220.214115] 
+# ls /sys/devices/pci0000:00/0000:00:15.0/pxa2xx-spi.0/spi_master/spi0/spi0.0/iio:device0/id
+ls: /sys/devices/pci0000:00/0000:00:15.0/pxa2xx-spi.0/spi_master/spi0/spi0.0/iio:device0/id: No such file or directory
+# 

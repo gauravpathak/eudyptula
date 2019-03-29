@@ -1,0 +1,79 @@
+From d6eadc6b342273e9cc86478d6ff26df71d7592c8 Mon Sep 17 00:00:00 2001
+From: Gaurav Pathak <gauravpathak129@gmail.com>
+Date: Sat, 11 Nov 2017 15:50:04 +0530
+Subject: [PATCH] Task-11: Added code to create custom file under respective
+ directory of /sys/devices/
+
+Signed-off-by: Gaurav Pathak <gauravpathak129@gmail.com>
+---
+ Task-11/adc1x8s102.c | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+
+diff --git a/Task-11/adc1x8s102.c b/Task-11/adc1x8s102.c
+index 855e190..78a86c3 100644
+--- a/Task-11/adc1x8s102.c
++++ b/Task-11/adc1x8s102.c
+@@ -259,6 +259,49 @@ static const struct iio_info adc1x8s102_info = {
+ 	.driver_module		= THIS_MODULE,
+ };
+ 
++const char MY_ID[] = "823daa4ac90a";
++static char id[12];
++
++static ssize_t event_store(struct device *dev,
++	struct device_attribute *attr, const char *valbuf, size_t count)
++{
++
++	ssize_t ret = 0;
++
++	if (strcmp(attr->attr.name, "id") == 0) {
++		if (strncmp(valbuf, MY_ID, strlen(MY_ID)) != 0)
++			ret = -EINVAL;
++		else {
++			strncpy(id, valbuf, strlen(MY_ID));
++			ret = count;
++		}
++	}
++
++	return ret;
++}
++
++static ssize_t event_show(struct device *dev,
++	struct device_attribute *attr, char *valbuf)
++{
++
++	int ret = 0;
++
++	if (strcmp(attr->attr.name, "id") == 0)
++		ret = sprintf(valbuf, "%s\n", MY_ID);
++
++	return ret;
++}
++
++DEVICE_ATTR_RW(event);
++
++static int create_sysfs_attrs(struct iio_dev *dev)
++{
++	int retval = 0;
++
++	retval = device_create_file(&dev->dev, &dev_attr_event);
++
++	return retval;
++}
+ 
+ static int adc1x8s102_probe(struct spi_device *spi)
+ {
+@@ -324,6 +367,10 @@ static int adc1x8s102_probe(struct spi_device *spi)
+ 			"Failed to register IIO device\n");
+ 		goto error_cleanup_ring;
+ 	}
++
++	if (create_sysfs_attrs(indio_dev) < 0)
++		dev_err(&spi->dev, "Failed to create User Entry\n");
++
+ 	return 0;
+ 
+ error_cleanup_ring:
+-- 
+2.11.0
+
