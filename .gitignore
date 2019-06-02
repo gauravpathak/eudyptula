@@ -7,3 +7,9 @@
 .o
 .cmd
 .order
+.mod.c
+.mk
+.tmp_versions
+Module.symvers
+*.settings
+*.mk
