@@ -49,16 +49,16 @@ void identity_destroy(int id)
 
 struct identity *identity_find(int id)
 {
-
 	struct identity *getId = NULL;
-	struct list_head *iter_list;
 	bool found = false;
 
-	list_for_each(iter_list, &id_list) {
-		getId = list_entry(iter_list, struct identity, list);
-		if (getId->id == id)
+	list_for_each_entry(getId, &id_list, list) {
+		if (getId->id == id) {
 			found = true;
+			break;
+		}
 	}
+
 	if (!found)
 		getId = NULL;
 	return getId;
@@ -94,7 +94,7 @@ static int create_list_init(void)
 {
 
 	int error_val = 0;
-	struct identity *temp;
+	struct identity *temp = NULL;
 
 	pr_debug("Hello World!\n");
 
