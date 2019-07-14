@@ -1,0 +1,16 @@
+root@odroid-c2:~# cat /proc/slabinfo                                                                                                                                               
+slabinfo - version: 2.1
+# name            <active_objs> <num_objs> <objsize> <objperslab> <pagesperslab> : tunables <limit> <batchcount> <sharedfactor> : slabdata <active_slabs> <num_slabs> <sharedavail>
+slab_823daa4ac90a     64     64     64   64    1 : tunables    0    0    0 : slabdata      1      1      0
+PINGv6                 0      0   1152   28    8 : tunables    0    0    0 : slabdata      0      0      0
+RAWv6                 28     28   1152   28    8 : tunables    0    0    0 : slabdata      1      1      0
+UDPv6                100    100   1280   25    8 : tunables    0    0    0 : slabdata      4      4      0
+tw_sock_TCPv6          0      0    232   17    1 : tunables    0    0    0 : slabdata      0      0      0
+request_sock_TCPv6      0      0    304   26    2 : tunables    0    0    0 : slabdata      0      0      0
+TCPv6                 42     42   2304   14    8 : tunables    0    0    0 : slabdata      3      3      0
+ext4_groupinfo_4k     56     56    144   28    1 : tunables    0    0    0 : slabdata      2      2      0
+dwc2-unaligned-dma      0      0   1024   16    4 : tunables    0    0    0 : slabdata      0      0      0
+btrfs_delayed_ref_head      0      0    160   25    1 : tunables    0    0    0 : slabdata      0      0      0
+btrfs_delayed_node      0      0    312   26    2 : tunables    0    0    0 : slabdata      0      0      0
+btrfs_ordered_extent      0      0    416   19    2 : tunables    0    0    0 : slabdata      0      0      0
+btrfs_extent_map       0      0    144   28    1 : tunables    0    0    0 : slabdata      0      0      0

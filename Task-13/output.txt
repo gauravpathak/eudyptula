@@ -1,0 +1,17 @@
+[  165.794890] Hello World!
+[  165.794985] Found id: 10 Name: Gena
+[  165.794986] id 42 not found
+[  165.794989] Found Bob with Id 2 for destruction
+[  165.794990] After deletion: 
+[  165.794992] Name: Alice Id: 1
+[  165.794994] Name: Dave Id: 3
+[  165.794995] Name: Gena Id: 10
+[  165.794997] Found Alice with Id 1 for destruction
+[  165.794999] After deletion: 
+[  165.795001] Name: Dave Id: 3
+[  165.795002] Name: Gena Id: 10
+[  165.795004] Found Gena with Id 10 for destruction
+[  165.795006] After deletion: 
+[  165.795007] Name: Dave Id: 3
+[  165.795009] Id 42 not found for destruction
+[  165.795011] Found Dave with Id 3 for destruction
