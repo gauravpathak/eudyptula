@@ -14,6 +14,7 @@ struct identity {
 };
 
 static struct identity *ID;
+static struct kmem_cache *slab_kmem;
 /* Declare and init the head of the linked list. */
 LIST_HEAD(id_list);
 
@@ -35,7 +36,7 @@ void identity_destroy(int id)
 
 	if (found) {
 		list_del_init(&getId->list);
-		kfree(getId);
+		kmem_cache_free(slab_kmem, getId);
 
 		getId = NULL;
 
@@ -70,8 +71,7 @@ int identity_create(char *name, int id)
 	int ret_val = 0;
 	ssize_t name_len = 0;
 
-	ID = kmalloc(sizeof(struct identity), GFP_KERNEL);
-
+	ID = kmem_cache_alloc(slab_kmem, GFP_ATOMIC);
 	if (ID == NULL)
 		ret_val = -ENOMEM;
 	else {
@@ -99,6 +99,16 @@ static int create_list_init(void)
 	pr_debug("Hello World!\n");
 
 	INIT_LIST_HEAD(&id_list);
+
+	slab_kmem = kmem_cache_create("slab_823daa4ac90a",
+			sizeof(struct identity), 0, SLAB_HWCACHE_ALIGN,
+			NULL);
+
+	if (slab_kmem == NULL) {
+		pr_err("Failed to make kmem cache\n");
+		error_val = -ENOMEM;
+		goto err_exit;
+	}
 
 	error_val = identity_create("Alice", 1);
 	if (error_val < 0) {
@@ -134,17 +144,23 @@ static int create_list_init(void)
 	identity_destroy(42);
 	identity_destroy(3);
 
-err_exit: return error_val;
+	return error_val;
+
+err_exit:
+	kmem_cache_destroy(slab_kmem);
+	return error_val;
 }
 
 static void create_list_exit(void)
 {
+	kmem_cache_destroy(slab_kmem);
 	pr_debug("Module Exiting\n");
+
 }
 
 module_init(create_list_init);
 module_exit(create_list_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("Task 12");
+MODULE_DESCRIPTION("Task 13");
 MODULE_AUTHOR("823daa4ac90a Gaurav Pathak");
