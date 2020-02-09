@@ -1,0 +1,16 @@
+##Kernel 4.19##
+
+
+root@odroid-c2:~# ./hello &
+[1] 1576
+root@odroid-c2:~# cat /proc/1576/id                                                                                                                                                       
+823daa4ac90a
+root@odroid-c2:~# cat /proc/1576/id 
+823daa4ac90b
+root@odroid-c2:~# ./hello &
+[2] 1579
+root@odroid-c2:~# cat /proc/1579/id                                                                                                                                                       
+823daa4ac90a
+root@odroid-c2:~# cat /proc/1579/id 
+823daa4ac90b
+root@odroid-c2:~#
