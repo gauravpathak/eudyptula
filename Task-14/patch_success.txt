@@ -1,0 +1,15 @@
+gaurav@gaurav-pc:linux ((HEAD detached at v4.19))$ git am 0001-Changes-for-Task-14.patch
+Applying: Changes for Task-14
+gaurav@gaurav-pc:linux ((HEAD detached from v4.19))$ git log
+commit 6937f5b10eb40d48c225ef6375a8fb7e05a2ec64 (HEAD)
+Author: OpenEmbedded <oe.patch@oe>
+Date:   Wed Feb 5 13:07:45 2020 +0530
+
+    Changes for Task-14
+
+commit 84df9525b0c27f3ebc2ebb1864fa62a97fdedb7d (tag: v4.19)
+Author: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Date:   Mon Oct 22 07:37:37 2018 +0100
+
+    Linux 4.19
+

@@ -101,8 +101,7 @@ static int create_list_init(void)
 	INIT_LIST_HEAD(&id_list);
 
 	slab_kmem = kmem_cache_create("slab_823daa4ac90a",
-			sizeof(struct identity), 0, SLAB_HWCACHE_ALIGN,
-			NULL);
+			sizeof(struct identity), 0, 0, NULL);
 
 	if (slab_kmem == NULL) {
 		pr_err("Failed to make kmem cache\n");
