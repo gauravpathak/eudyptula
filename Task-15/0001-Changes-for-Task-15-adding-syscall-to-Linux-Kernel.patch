@@ -1,0 +1,67 @@
+From 330101244377ed4122d8b0db99a5f6980fc929e6 Mon Sep 17 00:00:00 2001
+From: Gaurav Pathak <gauravpathak129@gmail.com>
+Date: Thu, 13 Feb 2020 12:53:21 +0530
+Subject: [PATCH] Changes for Task-15: adding syscall to Linux Kernel
+
+Added Custom Syscall sys_eudyptula
+
+Signed-off-by: Gaurav Pathak <gauravpathak129@gmail.com>
+---
+ include/uapi/asm-generic/unistd.h |  4 +++-
+ kernel/sys.c                      | 16 ++++++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/include/uapi/asm-generic/unistd.h b/include/uapi/asm-generic/unistd.h
+index df4bedb9b01c..85023130c00c 100644
+--- a/include/uapi/asm-generic/unistd.h
++++ b/include/uapi/asm-generic/unistd.h
+@@ -736,9 +736,11 @@ __SYSCALL(__NR_statx,     sys_statx)
+ __SC_COMP(__NR_io_pgetevents, sys_io_pgetevents, compat_sys_io_pgetevents)
+ #define __NR_rseq 293
+ __SYSCALL(__NR_rseq, sys_rseq)
++#define __NR_eudyptula 294
++__SYSCALL(__NR_eudyptula, sys_eudyptula)
+ 
+ #undef __NR_syscalls
+-#define __NR_syscalls 294
++#define __NR_syscalls 295
+ 
+ /*
+  * 32 bit systems traditionally used different
+diff --git a/kernel/sys.c b/kernel/sys.c
+index 123bd73046ec..6680e37bc1d3 100644
+--- a/kernel/sys.c
++++ b/kernel/sys.c
+@@ -73,6 +73,8 @@
+ 
+ #include "uid16.h"
+ 
++#define MY_ID	0x823daa4ac90a
++
+ #ifndef SET_UNALIGN_CTL
+ # define SET_UNALIGN_CTL(a, b)	(-EINVAL)
+ #endif
+@@ -2574,6 +2576,20 @@ SYSCALL_DEFINE1(sysinfo, struct sysinfo __user *, info)
+ 	return 0;
+ }
+ 
++SYSCALL_DEFINE2(eudyptula, unsigned int, high_id, unsigned int, low_id)
++{
++	unsigned long long id = 0;
++
++	id = (unsigned long long)(high_id);
++	id = id << 32;
++	id |= low_id;
++
++	if (id != MY_ID)
++		return -EINVAL;
++
++	return 0;
++}
++
+ #ifdef CONFIG_COMPAT
+ struct compat_sysinfo {
+ 	s32 uptime;
+-- 
+2.17.1
+

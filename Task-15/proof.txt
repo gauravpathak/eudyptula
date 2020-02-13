@@ -1,0 +1,7 @@
+root@odroid-c2:~# ./system_call 
+System call sys_eudyptula returned 0
+System call sys_eudyptula returned -1
+root@odroid-c2:~# ./system_call 
+System call sys_eudyptula returned 0
+System call sys_eudyptula returned -1
+root@odroid-c2:~# 
