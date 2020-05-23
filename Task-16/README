@@ -106,5 +106,21 @@ Anyway the task this time is:
 
 That's it, much like task 10 was, but this time you are fixing logical
 issues, not just pesky coding style issues.  You are a real developer
-now, fixing real bugs!
+now, fixing real bugs!  
 
+- - -  
+##### How to Run Sparse on Staging Driver Directory
+**Prepare Kernel**   
+`make mrproper; make clean; make distclean`  
+`make defconfig`  
+
+**Use Menuconfig to Enable Staging Drivers**  
+_Device Drivers --> Staging Drivers_  
+Enable all drivers with **M**, use **\*** if **M** is not available.  
+`make menuconfig`  
+
+**Prepare Modules**  
+`make modules_prepare`  
+
+**Run Sparse on Staging Drivers**  
+`make C=1 M=drivers/staging`
