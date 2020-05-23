@@ -109,7 +109,7 @@ issues, not just pesky coding style issues.  You are a real developer
 now, fixing real bugs!  
 
 - - -  
-##### How to Run Sparse on Staging Driver Directory
+#### How to Run Sparse on Staging Driver Directory
 **Prepare Kernel**   
 `make mrproper; make clean; make distclean`  
 `make defconfig`  
