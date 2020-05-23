@@ -1,4 +1,4 @@
-This is Task 16 of the Eudyptula Challenge
+This is Task 16 of the Eudyptula Challenge 
 ------------------------------------------
 
 Good job with the new syscall.  The odds of you ever having to write a
@@ -18,7 +18,7 @@ When you build the kernel, pass the "C=1" option to the build, to have
 sparse run on the .c file before gcc is run.  Depending on the file,
 nothing might be printed out, or something might.  Here's an example of
 it being run on the ext4 code:
-
+```
 $ make C=1 M=fs/ext4
   CHECK   fs/ext4/balloc.c
   CC      fs/ext4/balloc.o
@@ -83,7 +83,7 @@ fs/ext4/mballoc.c:5018:9: warning: context imbalance in 'ext4_trim_extent' - une
   LD      fs/ext4/built-in.o
   Building modules, stage 2.
   MODPOST 0 modules
-
+```
 As you can see, only one warning was found here, and odds are, it is a
 false-positive, as I'm sure those ext4 developers know what they are
 doing with their locking functions, right?
